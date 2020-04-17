@@ -23,12 +23,18 @@ int main( int argc, char** argv ) {
       }
    } // end of if ( argc > 1 )
 
-   pf_t pfs[num_pfs];
+   // pf_t pfs[num_pfs];
+   //
+   // gen_pfs( &(pfs[0]), num_pfs );
+   // calc_pfs( &(pfs[0]), num_pfs, debug );
+   // print_pfs( &(pfs[0]), num_pfs, "" );
+   pf_t val_with_largest_min_pf;
 
-   gen_pfs( &(pfs[0]), num_pfs );
-   calc_pfs( &(pfs[0]), num_pfs, debug );
-   print_pfs( &(pfs[0]), num_pfs, "" );
-   
+   int vals[num_pfs];
+   gen_vals<int>( &(vals[0]), 0, 1000, num_pfs );
+
+   parallel_prime_decomposition( &val_with_largest_min_pf, &(vals[0]), num_pfs, debug ); 
+
    exit( EXIT_SUCCESS );
 }
 

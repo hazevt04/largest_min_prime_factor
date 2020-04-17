@@ -45,6 +45,7 @@ typedef std::chrono::duration<float> Duration;
 
 template <class T>
 void gen_vals( T* vals, const T upper, const T lower, const int num_vals ) {
+  srand(time(NULL));
   T range = upper - lower + (T)1;
   for( int index = 0; index < num_vals; index++ ) {
     vals[index] = (T)(rand() % (int)range) + lower;

@@ -5,6 +5,6 @@
 
 #include "pf.h"
 
-void parallel_prime_decompostion( pf_t* largest, const int* vals, const int num_vals );
+void parallel_prime_decomposition( pf_t* largest, const int* vals, const int num_vals, const bool debug );
 
 #endif // end of #ifndef __PARALLEL_PRIME_DECOMPOSITION_H__

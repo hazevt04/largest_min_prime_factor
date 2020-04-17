@@ -12,12 +12,16 @@ typedef struct pf_s {
 } pf_t;
 
 
+void init_pfs( pf_t* pfs, const int* __restrict__ vals, const int num_vals );
+
 void gen_pfs( pf_t* pfs, const int num_pfs );
 
 void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug );
 
-void print_pf( const pf_t* pf, const char* prefix );
+void copy_pf( pf_t* dest, const pf_t* src );
 
-void print_pfs( const pf_t* pfs, const int num_pfs, const char* prefix );
+void print_pf( const pf_t* __restrict__ pf, const char* __restrict__ prefix );
+
+void print_pfs( const pf_t* __restrict__ pfs, const int num_pfs, const char* __restrict__ prefix );
 
 #endif // end of #ifndef __PF_H__
