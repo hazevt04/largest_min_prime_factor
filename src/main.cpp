@@ -32,7 +32,6 @@ int main( int argc, char** argv ) {
    
    pthread_t threads[ num_threads ];
    pf_thread_args_t args[ num_threads ];
-
    srand(time(NULL));
    for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
       args[thread_num].thread_num = thread_num;
@@ -44,16 +43,22 @@ int main( int argc, char** argv ) {
          args[thread_num].pfs[ index ].val = ( rand() % max_val ) + 2; 
       } 
       args[thread_num].debug = debug;
+   }
+
+   Duration_ms duration_ms;
+   Time_Point start_time = Steady_Clock::now();
+   for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
 
       int t = pthread_create( &(threads[thread_num]), NULL, pf_thread, (void*)&(args[thread_num]) );
       if (t != 0) {
          printf( "Error in thread %d creation: %d\n", thread_num, t );
       }      
-   } 
+   }
 
    for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
       pthread_join( threads[ thread_num ], NULL );
    } 
+   duration_ms = Steady_Clock::now() - start_time;
 
    for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
       std::string thread_str = "Thread "; 
@@ -65,6 +70,7 @@ int main( int argc, char** argv ) {
       free( args[ thread_num ].pfs );
       args[ thread_num ].pfs = NULL;
    }
+   printf( "Processing %d inputs took %8.7f ms\n", num_pfs, duration_ms.count() ); 
    exit( EXIT_SUCCESS );
 }
 

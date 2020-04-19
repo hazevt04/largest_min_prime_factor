@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 2.8.0 )
 
-project( parallel_prime_decomposition )
+project( largest_min_prime_factor )
 
 include_directories( "include" )
 

@@ -38,12 +38,14 @@ inline int difference_or_zero(int a, int b) {
 #define MILLISECONDS_PER_SECOND (1000.0f)
 typedef std::chrono::steady_clock Steady_Clock;
 typedef std::chrono::time_point<std::chrono::steady_clock> Time_Point;
-typedef std::chrono::duration<float> Duration;
+typedef std::chrono::duration<float, std::milli> Duration_ms;
+typedef std::chrono::duration<float, std::micro> Duration_us;
+typedef std::chrono::duration<float, std::nano> Duration_ns;
 
 //Example usage:
 //Time_Point start = Steady_Clock::now();
 //Timed code goes here
-//Duration duration_ms = Steady_Clock::now() - start;
+//Duration_ms duration_ms = Steady_Clock::now() - start;
 //milliseconds = duration_ms.count();
 //printf( "CPU: Func() took %f milliseconds to process %d values\n", milliseconds, num_vals );
 
