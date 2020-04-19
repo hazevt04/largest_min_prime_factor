@@ -23,6 +23,8 @@
 
 #define MAX(a,b) ((a) > (b)) ? (a) : (b);
 
+#define CEILING(a,b) ((a) + ((b)-1))/(b);
+
 // Hacker's Delight Second Edition pg 44 ('doz')
 // Only valid for signed integers, -2^30 < a,b <=(2^30)-1
 // or unsigned integers, 0 < a,b <= (2^31)-1
