@@ -12,7 +12,7 @@ Show how this can be formulated in your language. Parallelize the factorization 
 For the prime number decomposition you may use the solution of the Prime decomposition task.<br>
 Prime Decomposition:<br>
 
-(http://rosettacode.org/wiki/Prime\_decomposition)
+(http://rosettacode.org/wiki/Prime_decomposition)
 
 The prime decomposition of a number is defined as a list of prime numbers which when all multiplied together, are equal to that number.<br>
 
