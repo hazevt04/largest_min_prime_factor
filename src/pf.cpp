@@ -16,7 +16,6 @@ void copy_pf( pf_t* dest, const pf_t* src ) {
 
 
 void num_primes_up_to_val( int* num_primes, const int val, const bool debug = false ) {
-   
    int prime_index = 0;
    while( primes[prime_index] <= val ) {
       ++prime_index;
@@ -79,7 +78,7 @@ void init_pfs( pf_t* pfs, const int* __restrict__ vals, const int num_vals ) {
 // Generate random numbers for pfs
 void gen_pfs( pf_t* pfs, const int num_pfs ) {
    int range = 1000;
-   int lower = 0;
+   int lower = 2;
    srand(time(NULL));
    for( int index = 0; index < num_pfs; index++ ) {
       pfs[ index ].val = (int)(rand() % (int)range) + lower;
@@ -99,7 +98,7 @@ void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug = false, const cha
 // print an array of pfs
 void print_pfs( const pf_t*  __restrict__ pfs, const int num_pfs, const char* __restrict__ prefix="" ) {
    for( int index = 0; index < num_pfs; index++ ) {
-      printf( "%s%d: { ", prefix, pfs[index].val );
+      printf( "%s%d) %d: { ", prefix, index, pfs[index].val );
       for( int inner_index = 0; inner_index < pfs[index].num_prime_factors; inner_index++ ) {
          printf( "%d%s", pfs[index].prime_factors[ inner_index ], 
             ( ( inner_index < pfs[index].num_prime_factors - 1 ) ? "," : "" ) ); 
