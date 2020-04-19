@@ -5,15 +5,17 @@
 #define FAILURE -2
 
 // printf is preferred over std::cout
-#ifdef USE_PRINTF
-#  include <cstdio>
-#else
+#ifdef USE_COUT
 #  include <iostream>
+#else
+#  include <cstdio>
 #endif
+
 #include <stdarg.h>
 #include <cstdlib>
 #include <cstddef>
 #include <chrono>
+#include <string>
 
 #define SWAP(a,b) { \
    (a) ^= (b); \

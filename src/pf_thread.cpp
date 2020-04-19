@@ -11,7 +11,7 @@ void* pf_thread( void* thread_args ) {
 
    calc_pfs( &(args->pfs[0]), args->num_pfs, args->debug, prefix_str.c_str() );
 
-   print_pfs( &(args->pfs[0]), args->num_pfs, prefix_str.c_str() );
+   //print_pfs( &(args->pfs[0]), args->num_pfs, prefix_str.c_str() );
    return NULL;
 }
 

@@ -21,23 +21,27 @@ int main( int argc, char** argv ) {
          exit( EXIT_FAILURE );
       }
    } // end of if ( argc > 1 )
-   debug_printf( debug, "Num pfs is %d\n", num_pfs ); 
 
    pf_t val_with_largest_min_pf;
 
-   int max_val = 1000;
-   int num_threads = 1;
+   int num_threads = 8;
    int pfs_per_thread = CEILING( num_pfs, num_threads );
-   pthread_t threads[num_threads];
-   pf_thread_args_t args[num_threads];
+   debug_printf( debug, "Num PFs = %d\n", num_pfs ); 
+   debug_printf( debug, "Num Threads = %d\n", num_threads ); 
+   debug_printf( debug, "PFs Per Thread = %d\n", pfs_per_thread ); 
+   
+   pthread_t threads[ num_threads ];
+   pf_thread_args_t args[ num_threads ];
 
    srand(time(NULL));
    for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
       args[thread_num].thread_num = thread_num;
       args[thread_num].num_pfs = pfs_per_thread;
       args[thread_num].pfs = (pf_t*)malloc( sizeof(pf_t) * pfs_per_thread );
-      for( int index = thread_num; index < pfs_per_thread; index++ ) {
-         args[thread_num].pfs[index].val = ( rand() % max_val ) + 2; 
+      
+      int max_val = 1000;
+      for( int index = 0; index < pfs_per_thread; index++ ) {
+         args[thread_num].pfs[ index ].val = ( rand() % max_val ) + 2; 
       } 
       args[thread_num].debug = debug;
 
@@ -49,9 +53,18 @@ int main( int argc, char** argv ) {
 
    for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
       pthread_join( threads[ thread_num ], NULL );
-      free( args[ thread_num ].pfs );
    } 
 
+   for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
+      std::string thread_str = "Thread "; 
+      thread_str += std::to_string( thread_num );
+      thread_str += ": ";
+
+      print_pfs( &(args[ thread_num ].pfs[0]), args[ thread_num ].num_pfs, thread_str.c_str() );
+      
+      free( args[ thread_num ].pfs );
+      args[ thread_num ].pfs = NULL;
+   }
    exit( EXIT_SUCCESS );
 }
 
