@@ -30,6 +30,8 @@ void gen_pfs( pf_t* pfs, const int num_pfs );
 
 void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug, const char* __restrict__ prefix );
 
+void find_largest_min_pf( int* largest_min_pf, pf_t* pfs, const int num_pfs, const bool debug, const char* __restrict__ prefix );
+
 void print_pfs( const pf_t* __restrict__ pfs, const int num_pfs, const char* __restrict__ prefix );
 
 

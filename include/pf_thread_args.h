@@ -5,6 +5,7 @@
 
 typedef struct pf_thread_args_s {
    pf_t* pfs;
+   int largest_min_prime_factor;
    int num_pfs;
    int thread_num;
    bool debug;

@@ -22,8 +22,6 @@ int main( int argc, char** argv ) {
       }
    } // end of if ( argc > 1 )
 
-   pf_t val_with_largest_min_pf;
-
    int num_threads = 8;
    int pfs_per_thread = CEILING( num_pfs, num_threads );
    debug_printf( debug, "Num PFs = %d\n", num_pfs ); 
@@ -60,6 +58,7 @@ int main( int argc, char** argv ) {
    } 
    duration_ms = Steady_Clock::now() - start_time;
 
+   int val_with_largest_min_pf = args[ 0 ].pfs[0].val;
    for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
       std::string thread_str = "Thread "; 
       thread_str += std::to_string( thread_num );
@@ -67,9 +66,15 @@ int main( int argc, char** argv ) {
 
       print_pfs( &(args[ thread_num ].pfs[0]), args[ thread_num ].num_pfs, thread_str.c_str() );
       
+      printf( "%sValue with the largest minimum prime factor: %d\n\n", thread_str.c_str(), args[ thread_num ].largest_min_prime_factor );
+      if ( args[ thread_num ].largest_min_prime_factor > val_with_largest_min_pf ) {
+         val_with_largest_min_pf = args[ thread_num ].largest_min_prime_factor;
+      }
+
       free( args[ thread_num ].pfs );
       args[ thread_num ].pfs = NULL;
    }
+   printf( "Value with Largest Minimum Prime Factor was %d\n", val_with_largest_min_pf );
    printf( "Processing %d inputs took %8.7f ms\n", num_pfs, duration_ms.count() ); 
    exit( EXIT_SUCCESS );
 }

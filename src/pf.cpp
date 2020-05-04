@@ -25,7 +25,7 @@ void num_primes_up_to_val( int* num_primes, const int val, const bool debug = fa
 
 
 // Calculate prime factors for the val in pf
-void calc_pf( pf_t* pf, const bool debug = false, const char* prefix = "" ) {
+void calc_pf( pf_t* pf, const bool debug = false, const char* __restrict__ prefix = "" ) {
    int num_t_primes = 0;
 
    num_primes_up_to_val( &num_t_primes, pf->val, debug );
@@ -55,7 +55,7 @@ void calc_pf( pf_t* pf, const bool debug = false, const char* prefix = "" ) {
 
 
 // Calculate prime factors for each pf in the array of pfs
-void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug = false, const char* prefix = "" ) {
+void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug = false, const char* __restrict__ prefix = "" ) {
    for( int index = 0; index < num_pfs; index++ ) {
       //calc_pf( &(pfs[index]), debug, prefix );
       int p_index = 0;
@@ -82,6 +82,23 @@ void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug = false, const cha
    } // end of for( int index = 0; index < num_pfs; index++ ) {
 }
 
+
+void find_largest_min_pf( int* largest_min_pf, pf_t* pfs, const int num_pfs, const bool debug = false, 
+      const char* __restrict__ prefix = "" ) {
+   pf_t* largest_ptr = &pfs[0];
+   for( int index = 1; index < num_pfs; index++ ) {
+      debug_printf( debug, "%s(): %slargest_min_pf prime_factors[0] = %d\n",
+         __func__, prefix, largest_ptr->prime_factors[0] ); 
+      debug_printf( debug, "%s(): %spfs[%d].prime_factors[0] = %d\n",
+         __func__, prefix, index, pfs[index].prime_factors[0] ); 
+      if ( pfs[index].prime_factors[0] > largest_ptr->prime_factors[0] ) {
+         largest_ptr = &pfs[index];
+         debug_printf( debug, "%s(): %s\tNEW largest_min_pf prime_factors[0] = %d",
+            __func__, prefix, largest_ptr->prime_factors[0] ); 
+      }
+   }
+   *largest_min_pf = largest_ptr->val;
+}
 
 // print one pf
 void print_pf( const pf_t* __restrict__ pf, const char* __restrict__ prefix="" ) {
