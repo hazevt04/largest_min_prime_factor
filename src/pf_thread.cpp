@@ -9,7 +9,11 @@ void* pf_thread( void* thread_args ) {
    prefix_str += std::to_string( args->thread_num );
    prefix_str += ": ";
 
-   calc_pfs( &(args->pfs[0]), args->num_pfs, args->debug, prefix_str.c_str() );
+   if ( args->use_alt_imp ) {
+      calc_min_pfs( &(args->pfs[0]), args->num_pfs, args->debug, prefix_str.c_str() );
+   } else {
+      calc_pfs( &(args->pfs[0]), args->num_pfs, args->debug, prefix_str.c_str() );
+   }
 
    find_largest_min_pf( &(args->largest_min_prime_factor), &(args->pfs[0]), args->num_pfs, args->debug, prefix_str.c_str() );
 

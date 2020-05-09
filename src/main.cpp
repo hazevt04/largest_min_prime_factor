@@ -1,5 +1,6 @@
 // C++ File for main
 
+#include <string.h>
 #include "pf_thread.h"
 
 void usage( const char* prog_name ) {
@@ -12,8 +13,27 @@ void usage( const char* prog_name ) {
 int main( int argc, char** argv ) {
    int num_pfs = 8;
    bool debug = false;
+   bool use_alt_imp = false;
    char* end_ptr = NULL;
+   debug_printf( debug, "argc is %d\n", argc );
+   if ( argc > 2 ) {
+      debug_printf( debug, "argc > 1\n" ); 
+      if ( !strcmp( argv[2], "--alt" ) ||
+        ( !strcmp( argv[2], "-a" ) ) ) {
+         use_alt_imp = true;
+      } else {
+         printf( "ERROR: Invalid input: %s\n", argv[2] ); 
+         usage( argv[0] );
+         exit( EXIT_FAILURE );
+      }
+   }
    if ( argc > 1 ) {
+      debug_printf( debug, "argc > 0\n" ); 
+      if ( !strcmp( argv[1], "--help" ) ||
+        ( !strcmp( argv[1], "-h" ) ) ) {
+         usage( argv[0] );
+         exit( EXIT_SUCCESS );
+      }
       num_pfs = strtol( argv[1], &end_ptr, 10 );
       if ( *end_ptr != '\0' ) {
          printf( "ERROR: Invalid input: %s\n", argv[1] ); 
@@ -27,6 +47,7 @@ int main( int argc, char** argv ) {
    debug_printf( debug, "Num PFs = %d\n", num_pfs ); 
    debug_printf( debug, "Num Threads = %d\n", num_threads ); 
    debug_printf( debug, "PFs Per Thread = %d\n", pfs_per_thread ); 
+   debug_printf( debug, "Use Alternate Implementation = %s\n", ( use_alt_imp ? "true" : "false" ) ); 
    
    pthread_t threads[ num_threads ];
    pf_thread_args_t args[ num_threads ];
@@ -34,6 +55,7 @@ int main( int argc, char** argv ) {
    for( int thread_num = 0; thread_num < num_threads; thread_num++ ) {
       args[thread_num].thread_num = thread_num;
       args[thread_num].num_pfs = pfs_per_thread;
+      args[thread_num].use_alt_imp = use_alt_imp;
       args[thread_num].pfs = (pf_t*)malloc( sizeof(pf_t) * pfs_per_thread );
       
       int max_val = 1000;

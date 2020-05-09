@@ -8,6 +8,7 @@ typedef struct pf_thread_args_s {
    int largest_min_prime_factor;
    int num_pfs;
    int thread_num;
+   bool use_alt_imp;
    bool debug;
 } pf_thread_args_t;
 

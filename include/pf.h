@@ -23,10 +23,11 @@ void calc_pf( pf_t* pf, const bool debug, const char* __restrict__ prefix );
 
 void print_pf( const pf_t* __restrict__ pf, const char* __restrict__ prefix );
 
-
 void init_pfs( pf_t* pfs, const int* __restrict__ vals, const int num_vals );
 
 void gen_pfs( pf_t* pfs, const int num_pfs );
+
+void calc_min_pfs( pf_t* pfs, const int num_pfs, const bool debug, const char* __restrict__ prefix );
 
 void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug, const char* __restrict__ prefix );
 
