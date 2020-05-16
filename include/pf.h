@@ -17,8 +17,6 @@ inline bool divides( int num, int div ) {
 
 void copy_pf( pf_t* dest, const pf_t* src );
 
-void num_primes_up_to_val( int* num_primes, const int val, const bool debug );
-
 void calc_pf( pf_t* pf, const bool debug, const char* __restrict__ prefix );
 
 void print_pf( const pf_t* __restrict__ pf, const char* __restrict__ prefix );

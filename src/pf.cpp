@@ -2,8 +2,6 @@
 
 #include "pf.h"
 
-#include "primes.h"
-
 // Copies from pf pointed to by src to pf pointed to by dest
 // pf_t struct has an array which requires a deep copy, done here
 void copy_pf( pf_t* dest, const pf_t* src ) {
@@ -12,15 +10,6 @@ void copy_pf( pf_t* dest, const pf_t* src ) {
    for( int index = 0; index < src->num_prime_factors; index++ ) {
       dest->prime_factors[index] = src->prime_factors[index];
    } 
-}
-
-
-void num_primes_up_to_val( int* num_primes, const int val, const bool debug = false ) {
-   int prime_index = 0;
-   while( primes[prime_index] <= val ) {
-      ++prime_index;
-   } 
-   *num_primes = prime_index;
 }
 
 
@@ -84,24 +73,24 @@ void calc_min_pfs( pf_t* pfs, const int num_pfs, const bool debug = false, const
       int p_index = 0;
       int pf_index = 0;
       int num_t_primes = 0;
-      num_primes_up_to_val( &num_t_primes, pfs[ index ].val, debug );
 
       int t_val = pfs[index].val;
-      while( ( p_index < num_t_primes ) ) {
-         if ( divides( t_val, primes[ p_index ] ) ) {
+      int t_div = 2;
+      while( t_val > 1 ) {
+         if ( divides( t_val, t_div ) ) {
             debug_printf( debug, "%s(): %sTemp Val is %d\n", __func__, prefix, t_val ); 
-            debug_printf( debug, "%s(): %sPrimes[ %d ] is %d\n", __func__, prefix, p_index, primes[ p_index ] );
-            debug_printf( debug, "%s(): %sTemp Val was divisible by that prime. It is a prime factor\n\n", __func__, prefix ); 
-            pfs[index].prime_factors[ pf_index ] = primes[ p_index ];
-            // Assumes the first prime factor found IS the minimum prime factor!
+            debug_printf( debug, "%s(): %sTemp Divisor is %d\n", __func__, prefix, t_div );
+            debug_printf( debug, "%s(): %sTemp Val was divisible by that divisor. It is a prime factor\n\n", __func__, prefix ); 
+            pfs[index].prime_factors[ pf_index ] = t_div;
+            t_val = t_val/t_div;
+            pf_index++;
             break;
          } else {
-            debug_printf( debug, "%s(): %sTemp Val, %d, is not divisible by prime %d, %d. Prime index incremented.\n\n", __func__, 
-               prefix, t_val, p_index, primes[ p_index ] ); 
-            p_index++;
+            debug_printf( debug, "%s(): %sTemp Val, %d, is not divisible by divisor %d. Prime index incremented.\n\n", __func__, 
+               prefix, t_val, t_div ); 
+            t_div++;
          }
       } // end of while( ( p_index < num_t_primes ) && ( t_val > 1 ) ) {
-      // Assuming that the first prime factor IS the minimum.
       pfs[index].num_prime_factors = 1;
    } // end of for( int index = 0; index < num_pfs; index++ ) {
    
