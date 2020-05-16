@@ -28,24 +28,21 @@ void num_primes_up_to_val( int* num_primes, const int val, const bool debug = fa
 void calc_pf( pf_t* pf, const bool debug = false, const char* __restrict__ prefix = "" ) {
    int num_t_primes = 0;
 
-   num_primes_up_to_val( &num_t_primes, pf->val, debug );
-   debug_printf( debug, "%sNumber of primes up to %d is %d\n", prefix, pf->val, num_t_primes ); 
-
    int t_val = pf->val;
+   int t_div = 2;
    int p_index = 0;
    int pf_index = 0;
-   while( ( p_index < num_t_primes ) && ( t_val > 1 ) ) {
-      if ( divides( t_val, primes[ p_index ] ) ) {
+   while( t_val > 1 ) {
+      if ( divides( t_val, t_div ) ) {
          debug_printf( debug, "%s(): %sTemp Val is %d\n", __func__, prefix, t_val ); 
-         debug_printf( debug, "%s(): %sPrimes[ %d ] is %d\n", __func__, prefix, p_index, primes[ p_index ] );
-         debug_printf( debug, "%s(): %sTemp Val was divisible by that prime. It is a prime factor\n\n", __func__, prefix ); 
-         pf->prime_factors[ pf_index ] = primes[ p_index ];
-         t_val = t_val/primes[ p_index ];
-         pf_index++;
+         debug_printf( debug, "%s(): %sTemp Divisor is %d\n", __func__, prefix, t_div );
+         debug_printf( debug, "%s(): %sTemp Val was divisible by that divisor. It is a prime factor\n\n", __func__, prefix ); 
+         pf->prime_factors[ pf_index++ ] = t_div;
+         t_val = t_val/t_div;
       } else {
-         debug_printf( debug, "%s(): %sTemp Val, %d, is not divisible by prime %d, %d. Prime index incremented.\n\n", __func__, 
-            prefix, t_val, p_index, primes[ p_index ] ); 
-         p_index++;
+         debug_printf( debug, "%s(): %sTemp Val, %d, is not divisible by the divisor %d, Prime index incremented.\n\n", __func__, 
+            prefix, t_val, t_div ); 
+         t_div++;
       }
    } // end of while( ( p_index < num_t_primes ) && ( t_val > 1 ) ) {
    
@@ -57,25 +54,24 @@ void calc_pf( pf_t* pf, const bool debug = false, const char* __restrict__ prefi
 // Calculate prime factors for each pf in the array of pfs
 void calc_pfs( pf_t* pfs, const int num_pfs, const bool debug = false, const char* __restrict__ prefix = "" ) {
    for( int index = 0; index < num_pfs; index++ ) {
-      //calc_pf( &(pfs[index]), debug, prefix );
       int p_index = 0;
       int pf_index = 0;
       int num_t_primes = 0;
-      num_primes_up_to_val( &num_t_primes, pfs[ index ].val, debug );
 
       int t_val = pfs[index].val;
-      while( ( p_index < num_t_primes ) && ( t_val > 1 ) ) {
-         if ( divides( t_val, primes[ p_index ] ) ) {
+      int t_div = 2;
+      while( t_val > 1 ) {
+         if ( divides( t_val, t_div ) ) {
             debug_printf( debug, "%s(): %sTemp Val is %d\n", __func__, prefix, t_val ); 
-            debug_printf( debug, "%s(): %sPrimes[ %d ] is %d\n", __func__, prefix, p_index, primes[ p_index ] );
-            debug_printf( debug, "%s(): %sTemp Val was divisible by that prime. It is a prime factor\n\n", __func__, prefix ); 
-            pfs[index].prime_factors[ pf_index ] = primes[ p_index ];
-            t_val = t_val/primes[ p_index ];
+            debug_printf( debug, "%s(): %sTemp Divisor is %d\n", __func__, prefix, t_div );
+            debug_printf( debug, "%s(): %sTemp Val was divisible by that divisor. It is a prime factor\n\n", __func__, prefix ); 
+            pfs[index].prime_factors[ pf_index ] = t_div;
+            t_val = t_val/t_div;
             pf_index++;
          } else {
-            debug_printf( debug, "%s(): %sTemp Val, %d, is not divisible by prime %d, %d. Prime index incremented.\n\n", __func__, 
-               prefix, t_val, p_index, primes[ p_index ] ); 
-            p_index++;
+            debug_printf( debug, "%s(): %sTemp Val, %d, is not divisible by divisor %d. Prime index incremented.\n\n", __func__, 
+               prefix, t_val, t_div ); 
+            t_div++;
          }
       } // end of while( ( p_index < num_t_primes ) && ( t_val > 1 ) ) {
       pfs[index].num_prime_factors = pf_index;

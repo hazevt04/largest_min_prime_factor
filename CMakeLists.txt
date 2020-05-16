@@ -2,7 +2,11 @@ cmake_minimum_required( VERSION 2.8.0 )
 
 project( largest_min_prime_factor )
 
-include_directories( "include" )
+find_package( GMP REQUIRED )
+
+include_directories( 
+   "${CMAKE_SOURCE_DIR}/include" 
+   "${GMP_INCLUDES}" )
 
 add_definitions( -std=c++11 )
 
@@ -16,6 +20,6 @@ set(SRCS
    )
 
 add_executable( "${EXEC_NAME}" "${SRCS}" )
-target_link_libraries( "${EXEC_NAME}" m pthread )
+target_link_libraries( "${EXEC_NAME}" "${GMP_LIBRARIES}" m pthread )
 
 

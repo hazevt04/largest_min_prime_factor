@@ -1,6 +1,7 @@
 // C++ File for main
 
 #include <string.h>
+#include <gmp.h>
 #include "pf_thread.h"
 
 void usage( const char* prog_name ) {
